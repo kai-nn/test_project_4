@@ -87,8 +87,8 @@ function renderDiagram(object, period) {
             createLine(getActualPosition(events[0]), y2, getActualPosition(events[lastElem]), y2)
         }
 
-        createNode(contractPosition, y1, el.contract, el)
-        createNode(actualPosition, y2, el.actual, el)
+        createNode(contractPosition, y1, el.contract, el, 'byContract')
+        createNode(actualPosition, y2, el.actual, el, el.status)
     })
 
 
@@ -108,7 +108,7 @@ function renderDiagram(object, period) {
     }
 
 
-    function createNode(x, y, data, el) {
+    function createNode(x, y, data, el, type) {
         const width = 10, height = 10
         const rect = document.createElementNS(svgh, "rect")
         rect.setAttribute("x", x - width/2)
@@ -117,7 +117,7 @@ function renderDiagram(object, period) {
         rect.setAttribute("height", height)
         rect.setAttribute('stroke', 'black')
         rect.setAttribute('class', 'rect')
-        rect.setAttribute('type', el.status)
+        rect.setAttribute('type', type)
         holst.appendChild(rect)
 
         const sts = document.createElementNS(svgh, "text")

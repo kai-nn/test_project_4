@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <div class="window">
+    <div class="filter">
+      <span><b>Фильтрация</b></span>
+
+      <div id="period">
+        <span>Период</span>
+        <div class="from">
+          <div class="dataLabel">От: </div>
+          <input id="dataFrom" type="date" value="2017-05-22">
+        </div>
+        <div class="before">
+          <div class="dataLabel">До: </div>
+          <input id="dataBefore" type="date" value="2024-11-10">
+        </div>
+      </div>
+
+      <spa>Объекты</spa>
+      <ul class="select"></ul>
+
+      <button id="download">Загрузить .pdf</button>
+    </div>
+
+    <div class="diagram">
+      <div class="help">
+        <div class="helpEl">
+          <svg>
+            <rect x="10" y="12" width="10" height="10" class="rect" stroke="black" type="ok"></rect>
+            <text x="12" y="12" dominant-baseline="hanging">&check;</text>
+          </svg>
+          <div>Пройденные вехи в срок</div>
+        </div>
+
+        <div class="helpEl">
+          <svg>
+            <rect x="10" y="12" width="10" height="10" class="rect" stroke="black" type="disruption"></rect>
+            <text x="12" y="12" dominant-baseline="hanging">&check;</text>
+          </svg>
+          <div>Срыв</div>
+        </div>
+
+        <div class="helpEl">
+          <svg>
+            <rect x="10" y="12" width="10" height="10" class="rect" stroke="black" type="byContract"></rect>
+          </svg>
+          <div>Даты, согласно контрактного графика</div>
+        </div>
+
+        <div class="helpEl">
+          <svg>
+            <rect x="10" y="12" width="10" height="10" class="rect" stroke="black" type="forecast"></rect>
+          </svg>
+          <div>Прогноз</div>
+        </div>
+      </div>
+
+      <div id="diagram"></div>
+    </div>
+
+  </div>
+
+
+  <script src="js/mock.js"></script>
+  <script src="js/functions.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/html2pdf.bundle.min.js"></script>
+
+</body>
+</html>

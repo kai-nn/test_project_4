@@ -35,15 +35,43 @@ function renderDiagram(object, period) {
     // Создаем название объекта
     createTextBox(0, 0, nameBoxWidth, yLimit, name, 'label')
 
-    // Создаем шкалу
+    // Создаем временную сетку
     years.forEach((year, i) => {
         const x = nameBoxWidth + 365 * i * k
         const filled = objectYear.includes(year)
+        // Заголовок (год)
         createTextBox(x, 0, boxWidth, headerHeight, year, '', filled)
+        // Блок 'по контракту'
         createTextBox(x, headerHeight, boxWidth, (yLimit-headerHeight)/2, '', '', filled)
+        // Блок 'фактически'
         createTextBox(x, headerHeight+(yLimit-headerHeight)/2, boxWidth, (yLimit-headerHeight)/2, '', '', filled)
     })
 
+
+    // Создаем диаграмму
+    events.forEach((el, i) => {
+        const y1 = (yLimit / 4 + headerHeight / 2)
+        const y2 = y1 + yLimit / 2
+        const contractPosition = getContractPosition(el)
+        const actualPosition = getActualPosition(el)
+
+        createLine(contractPosition, y1, actualPosition, y2, '3 2')
+        const lastElem = events.length - 1
+        if (i === 0) {
+            createLine(getContractPosition(events[0]), y1, getContractPosition(events[lastElem]), y1)
+            createLine(getActualPosition(events[0]), y2, getActualPosition(events[lastElem]), y2)
+        }
+
+        createNode(contractPosition, y1, el.contract, el, 'byContract')
+        createNode(actualPosition, y2, el.actual, el, el.status)
+    })
+
+
+    // Рисуем объект
+    const row = document.createElement('div')
+    row.className = 'row'
+    diagram.appendChild(row)
+    row.appendChild(holst)
 
 
 
@@ -73,35 +101,10 @@ function renderDiagram(object, period) {
     }
 
 
-    // Создаем диаграмму
-    events.forEach((el, i) => {
-        const y1 = (yLimit / 4 + headerHeight / 2)
-        const y2 = y1 + yLimit / 2
-        const contractPosition = getContractPosition(el)
-        const actualPosition = getActualPosition(el)
-
-        createLine(contractPosition, y1, actualPosition, y2, '3 2')
-        const lastElem = events.length - 1
-        if (i === 0) {
-            createLine(getContractPosition(events[0]), y1, getContractPosition(events[lastElem]), y1)
-            createLine(getActualPosition(events[0]), y2, getActualPosition(events[lastElem]), y2)
-        }
-
-        createNode(contractPosition, y1, el.contract, el, 'byContract')
-        createNode(actualPosition, y2, el.actual, el, el.status)
-    })
-
-
-    // Рисуем объект
-    const row = document.createElement('div')
-    row.className = 'row'
-    diagram.appendChild(row)
-    row.appendChild(holst)
-
-
     function getContractPosition(el) {
         return parseInt((new Date(el.contract).getTime() / 86400000 - from) * k) + nameBoxWidth
     }
+
 
     function getActualPosition(el) {
         return parseInt((new Date(el.actual).getTime() / 86400000  - from) * k) + nameBoxWidth

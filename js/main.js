@@ -26,10 +26,18 @@ if(objects.length !== 0){
 }
 
 
+// Рескейл диаграммы при изменении размера окна
+window.onresize = () => updateDiagram()
+
+
+period.addEventListener('change', ev => updateDiagram())
+
+
 select.addEventListener('click', function (ev){
     if(ev.target.type !== 'checkbox') return
     updateDiagram()
 })
+
 
 // Вывод в .pdf через библиотеку html2pdf. Внимание! При конвертации html -> pdf
 // наступает деградация svg из-за неправильного использования css
@@ -44,9 +52,6 @@ document.getElementById('download').onclick = () => {
         .from(element)
         .save()
 }
-
-
-period.addEventListener('change', ev => updateDiagram())
 
 
 // Рендеринг диаграммы

@@ -55,7 +55,7 @@ function renderDiagram(object, period) {
         const contractPosition = getContractPosition(el)
         const actualPosition = getActualPosition(el)
 
-        createLine(contractPosition, y1, actualPosition, y2, '3 2')
+        createLine(contractPosition, y1+7.7, actualPosition, y2-7.7, '3 2')
         const lastElem = events.length - 1
         if (i === 0) {
             createLine(getContractPosition(events[0]), y1, getContractPosition(events[lastElem]), y1)
